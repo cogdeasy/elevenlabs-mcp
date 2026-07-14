@@ -92,7 +92,10 @@ def get_elevenlabs_resource(filename: str) -> Resource:
         try:
             text_content = file_data.decode("utf-8")
             return Resource(
-                uri=f"elevenlabs://{filename}", mimeType=mime_type, text=text_content
+                uri=f"elevenlabs://{filename}",
+                name=filename,
+                mimeType=mime_type,
+                text=text_content,
             )
         except UnicodeDecodeError:
             make_error(
@@ -102,7 +105,10 @@ def get_elevenlabs_resource(filename: str) -> Resource:
     # For binary files, return base64 encoded data
     base64_data = base64.b64encode(file_data).decode("utf-8")
     return Resource(
-        uri=f"elevenlabs://{filename}", mimeType=mime_type, data=base64_data
+        uri=f"elevenlabs://{filename}",
+        name=filename,
+        mimeType=mime_type,
+        data=base64_data,
     )
 
 
