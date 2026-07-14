@@ -50,6 +50,7 @@ SERVER_BOOTSTRAP = textwrap.dedent(
         "chunks": []
     }
     server.client = mock_client
+    server.play = MagicMock()
 
     server.main()
     """
