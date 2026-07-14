@@ -1305,7 +1305,8 @@ def list_phone_numbers() -> TextContent:
 )
 def play_audio(input_file_path: str) -> TextContent:
     file_path = handle_input_file(input_file_path)
-    play(open(file_path, "rb").read(), use_ffmpeg=False)
+    with open(file_path, "rb") as f:
+        play(f.read(), use_ffmpeg=False)
     return TextContent(type="text", text=f"Successfully played audio file: {file_path}")
 
 
