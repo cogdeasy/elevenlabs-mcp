@@ -17,6 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 keywords = [
     "elevenlabs",
@@ -28,16 +29,16 @@ keywords = [
 requires-python = ">=3.11"
 dependencies = [
     "mcp[cli]>=1.9.0",
-    "fastapi==0.109.2",
-    "uvicorn==0.27.1",
-    "python-dotenv==1.0.1",
+    "fastapi>=0.109.2",
+    "uvicorn>=0.27.1",
+    "python-dotenv>=1.0.1",
     "pydantic>=2.12",
-    "httpx==0.28.1",
+    "httpx>=0.28.1",
     "elevenlabs>=2.56.0",
-    "fuzzywuzzy==0.18.0",
+    "fuzzywuzzy>=0.18.0",
     "python-Levenshtein>=0.25.0",
-    "sounddevice==0.5.1",
-    "soundfile==0.13.1",
+    "sounddevice>=0.5.1",
+    "soundfile>=0.13.1",
 ]
 
 [project.scripts]

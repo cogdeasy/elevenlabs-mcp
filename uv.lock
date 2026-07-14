@@ -297,7 +297,7 @@ wheels = [
 
 [[package]]
 name = "elevenlabs"
-version = "2.53.0"
+version = "2.58.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
@@ -307,14 +307,14 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/09/a9/5f1afc8d3649b303e6a0f1c317f37062694be4dd95daec99d73581ceee54/elevenlabs-2.53.0.tar.gz", hash = "sha256:4681561f12a72baffc451f5d9d14b915dffe7e3d9b007917a1b077859bc63866", size = 646150, upload-time = "2026-06-15T09:33:10.332Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c0/f1/ffb45244b83bd6a2df5c3903b9c045f77659c6a591ee88881770d10762a2/elevenlabs-2.58.0.tar.gz", hash = "sha256:3281f0f6271dd8a40466a2d7cdd4bc3721937109fc2917248e87dbde3b7832a7", size = 686610, upload-time = "2026-07-13T09:33:57.448Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a7/ab/56c99ee7701ab4c2c587637a32b2f9b0afbfe3373069c02ecf524f752e16/elevenlabs-2.53.0-py3-none-any.whl", hash = "sha256:c1cb3bce2134ddc42375de77d88a8154c92bef497593ece2634b23e616ef057e", size = 1752582, upload-time = "2026-06-15T09:33:08.258Z" },
+    { url = "https://files.pythonhosted.org/packages/9d/2e/761c8c625a8c67a1c027005f56ebd1b9f14e2f974aec0558e94c3e5bca5e/elevenlabs-2.58.0-py3-none-any.whl", hash = "sha256:e64417e585b8f88ff5ca95bb41e2723c1634cf0424b971b6b7283960de633808", size = 1849831, upload-time = "2026-07-13T09:33:55.62Z" },
 ]
 
 [[package]]
 name = "elevenlabs-mcp"
-version = "0.9.1"
+version = "0.11.0"
 source = { editable = "." }
 dependencies = [
     { name = "elevenlabs" },
@@ -355,23 +355,23 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "build", marker = "extra == 'dev'", specifier = ">=1.0.3" },
-    { name = "elevenlabs", specifier = ">=2.53.0" },
-    { name = "fastapi", specifier = "==0.109.2" },
+    { name = "elevenlabs", specifier = ">=2.56.0" },
+    { name = "fastapi", specifier = ">=0.109.2" },
     { name = "fastmcp", marker = "extra == 'dev'", specifier = "==0.4.1" },
-    { name = "fuzzywuzzy", specifier = "==0.18.0" },
-    { name = "httpx", specifier = "==0.28.1" },
+    { name = "fuzzywuzzy", specifier = ">=0.18.0" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "mcp", extras = ["cli"], specifier = ">=1.9.0" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = "==3.6.2" },
     { name = "pydantic", specifier = ">=2.12" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "==8.0.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = "==4.1.0" },
-    { name = "python-dotenv", specifier = "==1.0.1" },
+    { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "python-levenshtein", specifier = ">=0.25.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.3.0" },
-    { name = "sounddevice", specifier = "==0.5.1" },
-    { name = "soundfile", specifier = "==0.13.1" },
+    { name = "sounddevice", specifier = ">=0.5.1" },
+    { name = "soundfile", specifier = ">=0.13.1" },
     { name = "twine", marker = "extra == 'dev'", specifier = "==6.1.0" },
-    { name = "uvicorn", specifier = "==0.27.1" },
+    { name = "uvicorn", specifier = ">=0.27.1" },
 ]
 provides-extras = ["dev"]
 
