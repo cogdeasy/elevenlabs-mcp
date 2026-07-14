@@ -12,6 +12,8 @@ jobs:
       matrix:
         python-version:
           - "3.11"
+          - "3.12"
+          - "3.13"
           - "3.14"
     runs-on: ubuntu-latest
     name: test (using Python v${{ matrix.python-version }})
@@ -29,6 +31,11 @@ jobs:
       - name: Install dependencies
         run: |
           uv pip install --system -e ".[dev]"
+
+      - name: Lint
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
 
       - name: Run tests
         # httpcore 1.0.9 (latest) still raises AttributeError on import under

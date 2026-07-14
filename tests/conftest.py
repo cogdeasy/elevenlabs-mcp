@@ -1,6 +1,12 @@
+import os
+
 import pytest
 from pathlib import Path
 import tempfile
+
+# elevenlabs_mcp.server requires an API key at import time; tests never make
+# real API calls, so a placeholder is sufficient.
+os.environ.setdefault("ELEVENLABS_API_KEY", "test-api-key")
 
 
 @pytest.fixture

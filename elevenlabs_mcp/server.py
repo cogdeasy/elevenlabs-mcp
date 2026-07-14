@@ -523,10 +523,15 @@ def get_voice(voice_id: str) -> McpVoice:
 def voice_clone(
     name: str, files: list[str], description: str | None = None
 ) -> TextContent:
-    input_files = [str(handle_input_file(file).absolute()) for file in files]
-    voice = client.voices.ivc.create(
-        name=name, description=description, files=input_files
-    )
+    input_paths = [handle_input_file(file) for file in files]
+    file_handles: list[IO[bytes]] = [path.open("rb") for path in input_paths]
+    try:
+        voice = client.voices.ivc.create(
+            name=name, description=description, files=file_handles
+        )
+    finally:
+        for f in file_handles:
+            f.close()
 
     return TextContent(
         type="text",

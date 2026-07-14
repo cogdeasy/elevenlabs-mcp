@@ -230,6 +230,7 @@ def test_handle_input_file():
         with pytest.raises(ElevenLabsMcpError):
             handle_input_file(str(temp_path / "nonexistent.mp3"))
 
+
 def test_simulate_conversation_bad_criteria_returns_error():
     """Missing fields in evaluation criteria should return an error without calling API."""
     with patch("elevenlabs_mcp.server.client") as mock_client:
@@ -237,10 +238,11 @@ def test_simulate_conversation_bad_criteria_returns_error():
             simulate_conversation(
                 agent_id="agent_abc",
                 simulated_user_prompt="Be difficult.",
-                extra_evaluation_criteria=[{"id": "check"}], 
+                extra_evaluation_criteria=[{"id": "check"}],
             )
-        
+
         mock_client.conversational_ai.agents.simulate_conversation.assert_not_called()
+
 
 def test_simulate_conversation_formats_transcript():
     """Conversation turns should appear correctly in output."""
@@ -263,7 +265,9 @@ def test_simulate_conversation_formats_transcript():
         mock_response = MagicMock()
         mock_response.simulated_conversation = [user_turn, agent_turn]
         mock_response.analysis = analysis
-        mock_client.conversational_ai.agents.simulate_conversation.return_value = mock_response
+        mock_client.conversational_ai.agents.simulate_conversation.return_value = (
+            mock_response
+        )
 
         result = simulate_conversation(
             agent_id="agent_abc",
@@ -281,7 +285,9 @@ def test_simulate_conversation_handles_empty_response():
         mock_response = MagicMock()
         mock_response.simulated_conversation = []
         mock_response.analysis = None
-        mock_client.conversational_ai.agents.simulate_conversation.return_value = mock_response
+        mock_client.conversational_ai.agents.simulate_conversation.return_value = (
+            mock_response
+        )
 
         result = simulate_conversation(
             agent_id="agent_abc",
