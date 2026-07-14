@@ -40,6 +40,15 @@ SERVER_BOOTSTRAP = textwrap.dedent(
         category="cloned",
         description=None,
     )
+    mock_client.text_to_speech.convert.return_value = [b"tts-audio-bytes"]
+    mock_client.text_to_sound_effects.convert.return_value = [b"sfx-audio-bytes"]
+    mock_client.user.subscription.get.return_value.model_dump_json.return_value = (
+        '{"tier": "free"}'
+    )
+    mock_client.conversational_ai.phone_numbers.list.return_value = []
+    mock_client.music.composition_plan.create.return_value.model_dump.return_value = {
+        "chunks": []
+    }
     server.client = mock_client
 
     server.main()
@@ -131,6 +140,64 @@ async def test_stdio_call_voice_clone(server_params, sample_audio_file):
             )
             assert not result.isError
             assert "Voice cloned successfully" in result.content[0].text
+
+
+@pytest.mark.anyio
+async def test_stdio_call_text_to_speech(server_params, temp_dir):
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            result = await session.call_tool(
+                "text_to_speech",
+                {"text": "Hello world", "output_directory": str(temp_dir)},
+            )
+            assert not result.isError
+            assert "Success. File saved as:" in result.content[0].text
+
+
+@pytest.mark.anyio
+async def test_stdio_call_text_to_sound_effects(server_params, temp_dir):
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            result = await session.call_tool(
+                "text_to_sound_effects",
+                {"text": "thunder", "output_directory": str(temp_dir)},
+            )
+            assert not result.isError
+            assert "Success. File saved as:" in result.content[0].text
+
+
+@pytest.mark.anyio
+async def test_stdio_call_check_subscription(server_params):
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            result = await session.call_tool("check_subscription", {})
+            assert not result.isError
+            assert '"tier": "free"' in result.content[0].text
+
+
+@pytest.mark.anyio
+async def test_stdio_call_list_phone_numbers(server_params):
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            result = await session.call_tool("list_phone_numbers", {})
+            assert not result.isError
+            assert "No phone numbers found" in result.content[0].text
+
+
+@pytest.mark.anyio
+async def test_stdio_call_create_composition_plan(server_params):
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            result = await session.call_tool(
+                "create_composition_plan", {"prompt": "calm piano"}
+            )
+            assert not result.isError
+            assert "chunks" in result.content[0].text
 
 
 @pytest.mark.anyio
