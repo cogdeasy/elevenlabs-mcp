@@ -524,8 +524,10 @@ def voice_clone(
     name: str, files: list[str], description: str | None = None
 ) -> TextContent:
     input_paths = [handle_input_file(file) for file in files]
-    file_handles: list[IO[bytes]] = [path.open("rb") for path in input_paths]
+    file_handles: list[IO[bytes]] = []
     try:
+        for path in input_paths:
+            file_handles.append(path.open("rb"))
         voice = client.voices.ivc.create(
             name=name, description=description, files=file_handles
         )
@@ -703,10 +705,15 @@ def add_knowledge_base_to_agent(
             )
             file = open(path, "rb")
 
-        response = client.conversational_ai.knowledge_base.documents.create_from_file(
-            name=knowledge_base_name,
-            file=file,
-        )
+        try:
+            response = (
+                client.conversational_ai.knowledge_base.documents.create_from_file(
+                    name=knowledge_base_name,
+                    file=file,
+                )
+            )
+        finally:
+            file.close()
 
     agent = client.conversational_ai.agents.get(agent_id=agent_id)
 
@@ -1456,8 +1463,10 @@ def video_to_music(
     output_path = make_output_path(output_directory, base_path)
     output_file_name = make_output_file("v2m", video_paths[0].name, "mp3")
 
-    file_handles: list[IO[bytes]] = [p.open("rb") for p in video_paths]
+    file_handles: list[IO[bytes]] = []
     try:
+        for p in video_paths:
+            file_handles.append(p.open("rb"))
         audio_data = client.music.video_to_music(
             videos=cast(list, file_handles),
             description=description,
@@ -1525,7 +1534,8 @@ def _is_broken_pipe_error(exc: BaseException) -> bool:
 
 def main():
     """Run the MCP server"""
-    print("Starting MCP server")
+    # Log to stderr: stdout carries the JSON-RPC stdio stream and must stay clean.
+    print("Starting MCP server", file=sys.stderr)
     try:
         mcp.run()
     except (BrokenPipeError, KeyboardInterrupt):
