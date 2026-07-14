@@ -14,7 +14,9 @@ This module owns shared server state (the ElevenLabs client, the FastMCP
 instance, and configuration) and re-exports every tool handler. The handlers
 themselves live in domain modules under ``elevenlabs_mcp.tools`` and read
 state dynamically via ``server.client`` etc., so patching attributes on this
-module (as the test suite does) affects all tools.
+module (as the test suite does) affects all tools. Values baked into tool
+signatures or descriptions at import time (e.g. the ``create_agent``
+``voice_id`` default) are the exception, matching pre-refactor behavior.
 """
 
 import base64
